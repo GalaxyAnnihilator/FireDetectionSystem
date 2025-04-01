@@ -20,7 +20,7 @@ while True:
         break
 
     # Dự đoán
-    results = model.predict(source=frame, imgsz=640, conf=0.1, verbose=False)
+    results = model.predict(source=frame, imgsz=640, conf=0.4, verbose=False)
 
     end = time.time()
     timer = end - start

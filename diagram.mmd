@@ -1,0 +1,79 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '14px'}}}%%
+flowchart TD
+    %% Data Layer
+    subgraph "Data Layer"
+        DS["Data Source (Camera Feeds)"]:::data
+        subgraph "Preprocessing"
+            EDA["EDA Notebook"]:::data
+            DP["Data Augmentation"]:::data
+            AN["Annotation (Roboflow)"]:::data
+        end
+    end
+
+    %% Model Layer
+    subgraph "Model Development"
+        TN["Model Training (train.py)"]:::ml
+        MV["Model Validation (evaluate.py)"]:::ml
+        MO["Model Optimization (TFLite)"]:::ml
+        TM["YOLOv8 Weights"]:::ml
+    end
+
+    %% Deployment Layer
+    subgraph "Deployment"
+        API["Flask API (app.py)"]:::deployment
+        PE["Prediction Engine (predict.py)"]:::deployment
+        DC["Docker Configuration"]:::deployment
+    end
+
+    %% IoT/Alert Layer
+    subgraph "IoT Integration"
+        TA["Telegram Alerts"]:::iot
+        AS["Alarm System (GPIO)"]:::iot
+        HW["Raspberry Pi Setup"]:::iot
+    end
+
+    %% Testing Infrastructure
+    subgraph "Testing"
+        UT["Unit Tests"]:::test
+            UT_DP["Data Processing Tests"]:::test
+            UT_ML["Model Tests"]:::test
+        IT["Integration Tests"]:::test
+        PT["Performance Tests"]:::test
+    end
+
+    %% Documentation
+    subgraph "Documentation"
+        DOC["README & User Guide"]:::doc
+        AD["Architecture Diagrams"]:::doc
+        RP["Research Papers"]:::doc
+    end
+
+    %% Connections
+    DS -->|Raw Feeds| EDA
+    EDA -->|Insights| DP
+    DP -->|Augmented Data| TN
+    TN -->|Initial Weights| MV
+    MV -->|Validation Metrics| MO
+    MO -->|Optimized Model| TM
+    TM -->|Loaded by| PE
+    PE -->|API Calls| API
+    API -->|Triggers| TA
+    API -->|Triggers| AS
+    UT -->|Validates| DP
+    UT -->|Validates| PE
+    IT -->|Tests Full Pipeline| API
+    PT -->|Benchmarks| HW
+
+    %% Click Events (Add your actual GitHub links)
+    click EDA "https://github.com/your-repo"
+    click TN "https://github.com/your-repo"
+    click UT "https://github.com/your-repo"
+    click DC "https://github.com/your-repo"
+
+    %% Styles
+    classDef data fill:#AED6F1,stroke:#1B4F72;
+    classDef ml fill:#A9DFBF,stroke:#145A32;
+    classDef deployment fill:#F9E79F,stroke:#B7950B;
+    classDef iot fill:#F5B7B1,stroke:#922B21;
+    classDef test fill:#D7BDE2,stroke:#6C3483;
+    classDef doc fill:#FAD7A0,stroke:#B9770E;

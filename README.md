@@ -1,10 +1,10 @@
 # Fire Detection System
 
 [![Python 3.9](https://img.shields.io/badge/Python-3.9-blue)](https://www.python.org/)
-[![Pytorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)](https://pytorch.org/)
+![PyTorch](https://img.shields.io/badge/PyTorch-black?logo=PyTorch)
 [![YOLOv8](https://img.shields.io/badge/YOLOv8-Ultralytics-red)](https://ultralytics.com/)
 
-Real-time detection of fire via household cameras
+Project: Real-time detection of fire via household cameras.
 
 ---
 

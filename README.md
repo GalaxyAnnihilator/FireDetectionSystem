@@ -1,7 +1,7 @@
 # Fire Detection System
 
 [![Python 3.9](https://img.shields.io/badge/Python-3.9-blue)](https://www.python.org/)
-![PyTorch](https://img.shields.io/badge/PyTorch-black?logo=PyTorch)
+![PyTorch](https://img.shields.io/badge/PyTorch-black?logo=PyTorch)(https://www.pytorch.org)
 [![YOLOv8](https://img.shields.io/badge/YOLOv8-Ultralytics-red)](https://ultralytics.com/)
 
 Project: Real-time detection of fire via household cameras.
@@ -34,7 +34,6 @@ FireDetectionSystem/
 │       ├── telegram_api.py  
 │       └── alarm_system.py  
 │       
-│  
 ├── tests/                   # Unit & integration tests  
 │   ├── unit/  
 │   └── integration/  
@@ -106,5 +105,4 @@ FireDetectionSystem/
 ---
 
 ## 📜 License  
-MIT License. See [LICENSE](LICENSE) for details.  
-```
+MIT License. See [LICENSE](LICENSE) for details.

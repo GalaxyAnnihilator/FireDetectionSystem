@@ -1,54 +1,70 @@
----
-config:
-  theme: mc
-  themeVariables:
-    fontSize: 14px
----
 flowchart TD
+    %% Data Management
     subgraph "Data Folder"
         DataRaw["Raw Data"]:::data
         DataAnnotated["Annotated Data"]:::data
         DataAugmented["Augmented Data"]:::data
     end
+
+    %% Data Processing & Training Module
     subgraph "Data Processing & Training Module"
         EDA["EDA Notebook"]:::processing
         DataProcessing["Data Processing Notebook"]:::processing
         Training["Training Notebook"]:::processing
     end
-    subgraph "IoT Module"
-        Telegram["Telegram API"]:::iot
-        Alarm["Alarm System"]:::iot
-    end
-    subgraph "Model Repository"
-        Model["Model Weights"]:::database
-    end
-    subgraph "Deployment Service"
-        FlaskApp["Flask API App"]:::deployment
-        Predict["Predict Service"]:::deployment
-    end
+
+    %% Testing Framework
     subgraph "Testing Framework"
         UnitTests["Unit Tests"]:::test
         IntegrationTests["Integration Tests"]:::test
     end
-    subgraph "Documentation"
-        Reports["Reports"]:::doc
-        Presentations["Presentations"]:::doc
+
+    %% Model Repository
+    subgraph "Model Repository"
+        Model["Model Weights"]:::database
+        TrainingResult["Training Results"]:::database
     end
+
+    %% Deployment Service
+    subgraph "Deployment Service"
+        FlaskApp["Flask API App"]:::deployment
+        Predict["Predict Service"]:::deployment
+    end
+
+    %% IoT Module
+    subgraph "IoT Module"
+        Telegram["Telegram API"]:::iot
+        Alarm["Alarm System"]:::iot
+    end
+
+
+    %% Documentation
+    subgraph "Documentation"
+        Reports["Reports"]:::test
+        Presentations["Presentations"]:::test
+    end
+
+    %% Connections
     DataRaw -->|"Roboflow Annotation"| DataAnnotated
     DataAnnotated -->|"Roboflow Albumentation"| DataAugmented
+
     DataAugmented -->|"data_input"| DataProcessing
     DataAugmented -->|"data_input"| EDA
-    EDA -->|"results"| Reports
+    EDA -->|"interesting explores"| Reports
     Reports -->|"slides"| Presentations
     DataProcessing -->|"prepare_training"| Training
     Training -->|"save_weights"| Model
+    %% Model -->|"load_weights"| FlaskApp
     Model -->|"load_weights"| Predict
-    Model -->|"result diagrams"| Reports
-    FlaskApp -->|"inference"| Predict
-    FlaskApp -->|"alert_trigger"| Telegram
-    FlaskApp -->|"alert_trigger"| Alarm
+    TrainingResult -->|"result diagrams"| Reports
+    
+    Predict  -->|"inference"| FlaskApp
     UnitTests -->|"validate_training"| Training
     IntegrationTests -->|"validate_deployment"| FlaskApp
+    FlaskApp -->|"alert_trigger"| Telegram
+    FlaskApp -->|"alert_trigger"| Alarm
+
+    %% Click Events
     click EDA "https://github.com/galaxyannihilator/firedetectionsystem/blob/main/src/EDA.ipynb"
     click DataProcessing "https://github.com/galaxyannihilator/firedetectionsystem/blob/main/src/data_processing.ipynb"
     click Training "https://github.com/galaxyannihilator/firedetectionsystem/blob/main/src/train_model.ipynb"
@@ -57,11 +73,12 @@ flowchart TD
     click Model "https://github.com/galaxyannihilator/firedetectionsystem/blob/main/models/best.pt"
     click FlaskApp "https://github.com/galaxyannihilator/firedetectionsystem/blob/main/deployment/app.py"
     click Predict "https://github.com/galaxyannihilator/firedetectionsystem/blob/main/deployment/predict.py"
-    click UnitTests "https://github.com/galaxyannihilator/firedetectionsystem/tree/main/tests/"
-    classDef data fill:#F0E68C,stroke:#333;
-    classDef processing fill:#C1E1C1,stroke:#333;
-    classDef iot fill:#FFD700,stroke:#333;
-    classDef database fill:#FFEEAD,stroke:#333;
-    classDef deployment fill:#ADD8E6,stroke:#333;
-    classDef test fill:#D3D3D3,stroke:#333;
-    classDef doc fill:#FFB6C1,stroke:#333;
+    click Tests "https://github.com/galaxyannihilator/firedetectionsystem/tree/main/tests/"
+
+    %% Styles
+    classDef data fill:#F0E68C,stroke:#333,stroke-width:3px;
+    classDef processing fill:#C1E1C1,stroke:#333,stroke-width:2px;
+    classDef iot fill:#FFD700,stroke:#333,stroke-width:2px;
+    classDef database fill:#FFEEAD,stroke:#333,stroke-width:2px;
+    classDef deployment fill:#ADD8E6,stroke:#333,stroke-width:2px;
+    classDef test fill:#D3D3D3,stroke:#333,stroke-width:2px;

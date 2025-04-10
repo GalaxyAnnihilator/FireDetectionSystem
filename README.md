@@ -10,6 +10,12 @@ Project: Real-time detection of fire via household cameras.
 
 ## 📂 Repository Hierarchy  
 
+<center>
+
+<img src="/figures/project_architecture.png" width = "70%">
+
+</center>
+
 ```bash
 FireDetectionSystem/  
 ├── data/  

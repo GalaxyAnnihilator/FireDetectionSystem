@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fire Detection System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Fire Detection System</h1>
+        <div class="video-container">
+            <img id="videoFeed" src="{{ url_for('video_feed') }}" alt="Video Feed">
+        </div>
+        <div class="status">
+            <p id="statusText">System Normal</p>
+            <p id="fpsText">FPS: 0.0</p>
+        </div>
+    </div>
+    <script>
+        // Update status and FPS dynamically
+        setInterval(() => {
+            fetch('/status')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('statusText').innerText = data.status;
+                    document.getElementById('fpsText').innerText = `FPS: ${data.fps.toFixed(1)}`;
+                });
+        }, 1000);
+    </script>
+</body>
+</html>

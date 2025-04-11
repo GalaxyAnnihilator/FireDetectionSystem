@@ -2,7 +2,7 @@ import cv2
 from ultralytics import YOLO
 
 class FireDetector:
-    def __init__(self, model_path='models/best.pt'):
+    def __init__(self, model_path='../models/best.pt'):
         self.model = YOLO(model_path)
         self.class_names = self.model.names
         self.conf_threshold = 0.4

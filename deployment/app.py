@@ -1,6 +1,10 @@
 import time
 import cv2
+from flask import Flask, render_template, Response
 from predict import FireDetector
+
+app = Flask(__name__)
+start_time = 0
 
 class Application:
     def __init__(self):
@@ -12,8 +16,7 @@ class Application:
     def run(self):
         """Main application loop"""
         print("Starting fire detection system...")
-        start_time = time.time()
-        
+        start_time = time.Time()
         try:
             while self.running and self.cap.isOpened():
                 ret, frame = self.cap.read()
@@ -24,7 +27,7 @@ class Application:
                 processed_frame, fire_detected = self.detector.process_frame(frame)
                 
                 # Calculate FPS
-                fps = self._calculate_fps(start_time)
+                fps = self._calculate_fps()
                 self._display_stats(processed_frame, fps, fire_detected)
                 
                 # Show output
@@ -34,12 +37,12 @@ class Application:
         finally:
             self._cleanup()
 
-    def _calculate_fps(self, start_time):
+    def _calculate_fps(self):
         """Calculate and smooth FPS values"""
         elapsed = time.time() - start_time
         fps = 1 / elapsed
         self.fps_history = (self.fps_history + [fps])[-10:]  # Keep last 10 values
-        return sum(self.fps_history)/len(self.fps_history)
+        return sum(self.fps_history) / len(self.fps_history)
 
     def _display_stats(self, frame, fps, fire_detected):
         """Display system statistics on frame"""
@@ -56,9 +59,6 @@ class Application:
         key = cv2.waitKey(1)
         if key == 32:  # Space bar
             self.running = False
-        elif key == ord('f'):  # Toggle fullscreen
-            cv2.setWindowProperty("Fire Detection System", cv2.WND_PROP_FULLSCREEN,
-                                not cv2.getWindowProperty("Fire Detection System", cv2.WND_PROP_FULLSCREEN))
 
     def _cleanup(self):
         """Release resources"""
@@ -66,6 +66,27 @@ class Application:
         cv2.destroyAllWindows()
         print("System shutdown successfully")
 
+    def generate_frames(self):
+        while True:
+            success, frame = self.cap.read()
+            if not success:
+                break
+            processed_frame, fire_detected = self.detector.process_frame(frame)
+            fps = self._calculate_fps()
+            self._display_stats(processed_frame, fps, fire_detected)
+            ret, buffer = cv2.imencode('.jpg', processed_frame)
+            frame = buffer.tobytes()
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/video_feed')
+def video_feed():
+    return Response(Application().generate_frames(),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
 if __name__ == "__main__":
-    app = Application()
-    app.run()
+    app.run(host='0.0.0.0', port=5000)

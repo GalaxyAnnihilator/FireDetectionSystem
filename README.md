@@ -4,7 +4,9 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-black?logo=PyTorch)](https://www.pytorch.org)
 [![YOLOv8](https://img.shields.io/badge/YOLOv8-Ultralytics-red)](https://ultralytics.com/)
 
-Project: Real-time detection of fire via household cameras.
+## Overview
+
+This project implements a fire detection system using computer vision techniques. It captures video from a webcam, processes the frames to detect fire, and displays the results in real-time. After a fire has been detected for 5 seconds, it calls an API call to Telegram to alert users of the incendinary.
 
 ---
 
@@ -12,7 +14,7 @@ Project: Real-time detection of fire via household cameras.
 
 <center>
 
-<img src="/figures/project_architecture.png" width = "70%">
+<img src="./figures/project_architecture.png" width = 70%>
 
 </center>
 

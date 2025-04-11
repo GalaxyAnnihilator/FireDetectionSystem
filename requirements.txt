@@ -1,7 +1,7 @@
 numpy>=1.21.0
 pandas
+Flask
 scikit-learn
-pytorch
 python-telegram-bot
 matplotlib
 opencv-python>=4.5.0

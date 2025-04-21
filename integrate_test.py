@@ -6,7 +6,7 @@ from deployment.predict import FireDetector
 class TestFireDetectionIntegration(unittest.TestCase):
     def setUp(self):
         """Set up the FireDetector instance and output log file."""
-        self.detector = FireDetector(model_path='./models/best.pt')
+        self.detector = FireDetector(model_path='./models/bestOftheBes.pt')
         self.test_videos_dir = './tests/unit/'  # Directory containing test videos
         self.output_log = './tests/integration/output_log.txt'
 

@@ -29,6 +29,7 @@ class FireDetector:
                     fire_detected = True
                     self._draw_boxes(annotated_frame, x1, y1, x2, y2, conf)
         
+        # Return the annotated frame and fire detection status
         return annotated_frame, fire_detected
 
     def _draw_boxes(self, frame, x1, y1, x2, y2, conf):
